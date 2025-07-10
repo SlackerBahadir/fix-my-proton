@@ -1,4 +1,6 @@
 .venv/
 ui/
+__pycache__/
+*.pyc
 
 .idea/
