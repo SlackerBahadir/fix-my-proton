@@ -47,6 +47,12 @@ def app_fix_menu(name_or_id: str):
     print("Welcome to [bold green]Fix Menu[/bold green] of [bold red]FixMyPROTON![/bold red]")
     print(
         f"This menu opened for game [yellow]'{app_name}'[/yellow]. [red]Please know what you are doing.[/red]")
+    print(
+        "[bold red]Notice[/bold red]: These fixes are based on commonly reported solutions in the Linux gaming community.")
+    print("[bold yellow]They are not guaranteed to work on every system or configuration.[/bold yellow]")
+    print(
+        "Some games may require additional tweaks, and results can vary depending on your system, Proton version, and hardware.")
+    print("If a fix doesn't help, don't worry — there are often other things to try!")
 
     while True:
         print("=====================================")

@@ -33,6 +33,8 @@ def set_proton_version(appid: str):
         try:
             data["InstallConfigStore"]["Software"]["Valve"]["Steam"]["CompatToolMapping"][appid]["name"] = selected_proton_version
 
+            data["InstallConfigStore"]["Software"]["Valve"]["Steam"]["CompatToolMapping"][appid]["priority"] = "250"
+
             stop_steam()
 
             with open(configvdf_path, 'w') as f:
@@ -62,3 +64,5 @@ def set_proton_version(appid: str):
             start_steam()
 
             print(f"[bold green]Proton version set to:[/bold green] {selected_proton_version}")
+    else:
+        print(f"[bold red]{configvdf_path} not found. Please check your Steam installation.[/bold red]")
