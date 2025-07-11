@@ -12,6 +12,7 @@ from core.find_app import find_app
 from core.scripts.remove_compatdata import remove_compatdata
 from core.scripts.remove_shadercache import remove_shadercache
 from core.scripts.reset_launch_options import reset_launch_option
+from core.scripts.set_proton_version import set_proton_version
 
 def app_fix_menu(name_or_id: str):
     apps_datas = find_app(name_or_id)
@@ -29,9 +30,13 @@ def app_fix_menu(name_or_id: str):
             print(f"[bold green]{i}[/bold green] - {app['name']}({app['id']})")
 
         try:
-            number = int(input("Which game are you trying to fix?: "))
+            number = int(input("Which game are you trying to fix? : "))
         except ValueError:
             print("[bold red]Enter a valid integer.[/bold red]")
+            sys.exit(1)
+
+        if number < 1 or number > len(apps_datas):
+            print("[bold red]Wrong choice. >:(")
             sys.exit(1)
 
         apps_data = apps_datas[number - 1]
@@ -51,6 +56,8 @@ def app_fix_menu(name_or_id: str):
               "  [yellow](clears precompiled graphics cache. fixes visual glitches, stutters and GPU usage spikes after proton upgrades.)[/yellow]")
         print("[bold green]3[/bold green] - [bold red]Reset launch options (automatically closes Steam, applies change, then reopens it)[/bold red]\n"
               "  [yellow](removes any custom commands like gamemoderun, DXVK async flags, mangohud etc.\n  If you're unsure what might be breaking your game, this is a safe cleanup step.)[/yellow]")
+        print("[bold green]4[/bold green] - [bold cyan]Change Proton version[/bold cyan]\n"
+              "  [yellow](sets a specific Proton version for this game. Useful if current version causes bugs or doesn't launch.)[/yellow]")
         print("\n[bold yellow]?[/bold yellow] - [bold green]For exiting, enter 0.[/bold green]")
         print("=====================================")
 
@@ -72,4 +79,7 @@ def app_fix_menu(name_or_id: str):
             sleep(1)
         elif choice == 3:
             reset_launch_option(app_id)
+            sleep(1)
+        elif choice == 4:
+            set_proton_version(app_id)
             sleep(1)

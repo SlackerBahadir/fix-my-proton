@@ -1,7 +1,6 @@
 from rich import print
 import os
 import vdf
-import sys
 
 from core.steam import *
 
@@ -22,7 +21,7 @@ def reset_launch_option(appid: str):
             choice = int(input("Enter your user's number: "))
         except ValueError:
             print("[bold red]Enter a valid integer.[/bold red]")
-            sys.exit(1)
+            return
 
         localconfig_path = os.path.join(userdata_path, users[choice - 1], "config", "localconfig.vdf")
 
