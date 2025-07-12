@@ -6,6 +6,7 @@ from core.steam import *
 from core.scripts.remove_compatdata import remove_compatdata
 from core.scripts.remove_shadercache import remove_shadercache
 from core.find_proton_versions import *
+from core.install_proton_version import *
 
 def set_proton_version(appid: str):
     configvdf_path = os.path.expanduser("~/.steam/steam/config/config.vdf")
@@ -64,5 +65,49 @@ def set_proton_version(appid: str):
             start_steam()
 
             print(f"[bold green]Proton version set to:[/bold green] {selected_proton_version}")
+    else:
+        print(f"[bold red]{configvdf_path} not found. Please check your Steam installation.[/bold red]")
+
+def set_proton_version_quietly(appid: str, version: str):
+    configvdf_path = os.path.expanduser("~/.steam/steam/config/config.vdf")
+
+    if os.path.exists(configvdf_path):
+        with open(configvdf_path, 'r') as f:
+            data: dict = vdf.load(f)
+        proton_versions = get_proton_versions()
+
+        if version not in proton_versions:
+            pass
+
+        try:
+            data["InstallConfigStore"]["Software"]["Valve"]["Steam"]["CompatToolMapping"][appid]["name"] = version
+
+            data["InstallConfigStore"]["Software"]["Valve"]["Steam"]["CompatToolMapping"][appid]["priority"] = "250"
+
+            stop_steam()
+
+            with open(configvdf_path, 'w') as f:
+                vdf.dump(data, f, True)
+
+            remove_compatdata(appid)
+            remove_shadercache(appid)
+
+            start_steam()
+        except KeyError:
+            data["InstallConfigStore"]["Software"]["Valve"]["Steam"]["CompatToolMapping"][appid].setdefault(appid, {
+                "name": version,
+                "config": "",
+                "priority": "250"
+            })
+
+            stop_steam()
+
+            with open(configvdf_path, 'w') as f:
+                vdf.dump(data, f, True)
+
+            remove_compatdata(appid)
+            remove_shadercache(appid)
+
+            start_steam()
     else:
         print(f"[bold red]{configvdf_path} not found. Please check your Steam installation.[/bold red]")

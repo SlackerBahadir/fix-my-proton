@@ -56,7 +56,7 @@ def app_fix_menu(name_or_id: str):
 
     while True:
         print("=====================================")
-        print("[bold green]1[/bold green] - [bold red]Remove compatdata and start game[/bold red]\n"
+        print("[bold green]1[/bold green] - [bold red]Remove compatdata[/bold red]\n"
               "  [yellow](to refresh the prefix for new proton versions. prevents broken configurations and conflicts between proton versions.)[/yellow]")
         print("[bold green]2[/bold green] - [bold red]Remove shadercache[/bold red]\n"
               "  [yellow](clears precompiled graphics cache. fixes visual glitches, stutters and GPU usage spikes after proton upgrades.)[/yellow]")
